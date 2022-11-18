@@ -1,7 +1,18 @@
+require("dotenv").config();
+
 const { RTMClient } = require("@slack/rtm-api");
 
-var token = "xoxb-4242129451747-4391602555475-uVOQeLU0FWyznZtANBnB2jUz";
+const fs = require("fs");
 
+var status = 0;
+
+let token;
+
+try {
+  token = fs.readFileSync("./token").toString("utf-8");
+} catch (err) {
+  console.error(err);
+}
 var rtm = new RTMClient(token);
 rtm.start();
 

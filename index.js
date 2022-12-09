@@ -7,13 +7,27 @@ const fs = require("fs");
 var status = 0;
 
 let token;
-
+var dat;
+var arr;
 try {
   token = fs.readFileSync("./token").toString("utf-8");
   todayMenuText = fs.readFileSync("./todayMenu.txt").toString("utf-8");
   weeklyMenuText = fs.readFileSync("./weeklyMenu.txt").toString("utf-8");
+  dat = fs.readFileSync("./dept.txt", "utf8");
+  arr = dat.split(/-|\n/);
 } catch (err) {
   console.error(err);
+}
+
+var dept = [];
+var location = [];
+
+for (var a = 1; a < arr.length; a += 2) {
+  location.push(arr[a]);
+}
+
+for (var b = 0; b < arr.length; b += 2) {
+  dept.push(arr[b].trim());
 }
 
 var test_channel = "C04AE27LV0D";
@@ -77,7 +91,11 @@ const sendWeeklyMenuEvaluation = function () {
   }
   return sendMessage;
 };
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
 
+console.log(getRandomInt(3));
 const randomGreetings = ["Hello!!", "안녕하세요!!", "Bonjour@"];
 const evalutions = ["☆☆☆", "★☆☆", "★★☆", "★★★"];
 const weekly = ["월 - ", "화 - ", "수 - ", "목 - ", "금 - "];
@@ -131,6 +149,28 @@ rtm.on("message", function (message) {
       } else {
         console.log("테스트#4 실패");
       }
+      status++;
+      rtm.sendMessage("학과 안내", test_channel);
+      console.log("테스트 #5 시작");
       break;
+
+    case 5:
+      if (text == "학과를 입력하세요") {
+        console.log("테스트#5 성공");
+      } else {
+        console.log("테스트#5 실패");
+      }
+      status++;
+      var randomInt = getRandomInt(10);
+      rtm.sendMessage(dept[randomInt], test_channel);
+      console.log("테스트 #6 시작");
+      break;
+
+    case 6:
+      if (location.indexOf(text) !== -1) {
+        console.log("테스트#6 성공");
+      } else {
+        console.log("테스트#6 실패");
+      }
   }
 });

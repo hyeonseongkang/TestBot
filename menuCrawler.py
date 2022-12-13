@@ -53,11 +53,14 @@ for i in range(5):
     weekly_menu_text += save_text + "\n"
     menu_list.append(save_text)
 #today = 4
+#print(weekly_menu_text)
 weekly_menu.write(weekly_menu_text)
 if today >= 5:
     #print("오늘은 운영하지 않습니다.")
+    #print("오늘 운영x")
     today_menu.write("오늘은 운영하지 않습니다.")
 else:
+    #print("\"" + menu_list[today] + "\"")
     #print("\"" + menu_list[today] + "\"")
     today_menu.write("\"" + menu_list[today] + "\"")
 today_menu.close
